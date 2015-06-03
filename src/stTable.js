@@ -79,10 +79,10 @@ ng.module('smart-table')
       var prop = predicate ? predicate : '$';
 
       input = ng.isString(input) ? input.trim() : input;
-      predicateObject[prop] = input;
+      $parse(prop).assign(predicateObject, input);
       // to avoid to filter out null value
       if (!input) {
-        delete predicateObject[prop];
+        $parse(prop).assign(predicateObject, undefined); //can't delete with $parse service
       }
       tableState.search.predicateObject = predicateObject;
       tableState.pagination.start = 0;
